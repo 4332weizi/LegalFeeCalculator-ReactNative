@@ -9,6 +9,12 @@ const LegalFeeApp = {
     },
     get Main() {
         return require('./app/main');
+    },
+    get Pixel() {
+        return require('./app/utils/pixel');
+    },
+    get Screen() {
+        return require('./app/utils/screen');
     }
 };
 

@@ -12,7 +12,7 @@ var Cell = React.createClass({
         var props = this.props;
         if (props.source == null) {
             return (<View style={[styles.container, props.style]}>
-                <Text style={styles.text}>{childrenAsString(this.props.children)}</Text>
+                <Text style={[styles.text, {color: props.textColor}]}>{childrenAsString(this.props.children)}</Text>
             </View>);
         } else {
             return (<View style={[styles.container, props.style]}>
