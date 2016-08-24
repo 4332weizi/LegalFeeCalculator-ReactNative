@@ -5,7 +5,7 @@ import Screen from './screen';
 
 const Pixel = {
     toDp: function (pixel) {
-        return pixel / PixelRatio.get() + 0.5;
+        return pixel / PixelRatio.get();
     },
     get deviceHeightPixel() {
         return PixelRatio.getPixelSizeForLayoutSize(Screen.height);
