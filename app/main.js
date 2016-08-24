@@ -2,11 +2,14 @@
 
 import React, {Component} from 'react';
 import {
+    Platform,
     AppRegistry,
     StyleSheet,
+    StatusBar,
     Text,
     View,
     Image,
+    Picker,
     PixelRatio
 } from 'react-native';
 import {
@@ -18,10 +21,16 @@ class Main extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <StatusBar backgroundColor="#303F9F" barStyle="light-content"/>
                 <View style={styles.title}>
                     <View style={styles.titleSpinner}>
-                        <Text style={{width: 130, marginRight: 10, fontSize: 18, textAlign: 'center', color: 'white'}}>财产案件受理费</Text>
-                        <Image source={require("./img/ic_spinner_triangle.png")}></Image>
+                        <Picker
+                            style={styles.titlePicker}
+                            mode="dropdown"
+                            onValueChange={(lang) => this.setState({language: lang})}>
+                            <Picker.Item style={styles.titlePickerItem} label="java" value="java"/>
+                            <Picker.Item style={styles.titlePickerItem} label="js" value="js"/>
+                        </Picker>
                     </View>
                     <View style={styles.titleFunction}>
                         <Image source={require("./img/ic_help_white.png")}></Image>
@@ -84,79 +93,96 @@ class Main extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'white',
-        justifyContent: 'space-between'
-    },
-    title: {
-        height: 50,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        backgroundColor: '#3F51B5'
-    },
-    titleSpinner: {
-        height: 50,
-        paddingLeft: 10,
-        paddingRight: 10,
-        backgroundColor: 'transparent',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    titleFunction: {
-        width: 50,
-        height: 50,
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-    },
-    content: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-start'
-    },
-    calculatorDisplayContainer: {
-        flex: 3,
-        flexDirection: 'row',
-        alignItems: 'flex-end',
-        backgroundColor: '#f1f3f3'
-    },
-    calculatorResultDisplay: {
-        flex: 1,
-        marginRight: 10,
-        fontSize: 60,
-        textAlign: 'right',
-        color: '#FF4081'
-    },
-    calculatorInputDisplay: {
-        flex: 1,
-        marginRight: 10,
-        fontSize: 60,
-        textAlign: 'right',
-        color: '#FF4081'
-    },
-    calculatorInputPanel: {
-        flex: 10,
-        justifyContent: 'space-between',
-        flexDirection: 'column',
-        backgroundColor: '#c3c6c7'
-    },
-    horizontalDivider: {
-        height: Pixel.toDp(2)
-    },
-    verticalDivider: {
-        width: Pixel.toDp(2)
-    },
-    calculatorRow: {
-        flex: 1,
-        flexDirection: 'row',
-        backgroundColor: '#c3c6c7'
-    },
-    calculatorCell: {
-        flex: 1,
-        backgroundColor: 'white'
-    }
-});
+        container: {
+            flex: 1,
+            backgroundColor: 'white',
+            justifyContent: 'space-between'
+        },
+        title: {
+            height: 50,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            backgroundColor: '#3F51B5'
+        }
+        ,
+        titleSpinner: {
+            height: 50,
+            paddingLeft: 10,
+            paddingRight: 10,
+            backgroundColor: 'transparent',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center'
+        },
+        titlePicker: {
+            width: 130,
+            color: 'white'
+        },
+        titlePickerItem: {
+            width: 130,
+        },
+        titleFunction: {
+            width: 50,
+            height: 50,
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+        },
+        content: {
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'flex-start'
+        }
+        ,
+        calculatorDisplayContainer: {
+            flex: 3,
+            flexDirection: 'row',
+            alignItems: 'flex-end',
+            backgroundColor: '#f1f3f3'
+        }
+        ,
+        calculatorResultDisplay: {
+            flex: 1,
+            marginRight: 10,
+            fontSize: 60,
+            textAlign: 'right',
+            color: '#FF4081'
+        }
+        ,
+        calculatorInputDisplay: {
+            flex: 1,
+            marginRight: 10,
+            fontSize: 60,
+            textAlign: 'right',
+            color: '#FF4081'
+        }
+        ,
+        calculatorInputPanel: {
+            flex: 10,
+            justifyContent: 'space-between',
+            flexDirection: 'column',
+            backgroundColor: '#c3c6c7'
+        }
+        ,
+        horizontalDivider: {
+            height: Pixel.toDp(2)
+        }
+        ,
+        verticalDivider: {
+            width: Pixel.toDp(2)
+        }
+        ,
+        calculatorRow: {
+            flex: 1,
+            flexDirection: 'row',
+            backgroundColor: '#c3c6c7'
+        }
+        ,
+        calculatorCell: {
+            flex: 1,
+            backgroundColor: 'white'
+        }
+    })
+    ;
 
 module.exports = Main;
