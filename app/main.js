@@ -16,6 +16,14 @@ import {
     Cell,
     Pixel
 } from '../legalfeeapp';
+import CCAJSLFCase from './legalcase/ccajslfcase';
+import CCBQSQFCase from './legalcase/ccbqsqfcase';
+import QZZXSQFCase from './legalcase/qzzxsqfcase';
+import LHAJSLFCase from './legalcase/lhajslfcase';
+import ZFLSQFCase from './legalcase/zflsqfcase';
+import RGQAJSLFCase from './legalcase/rgqajslfcase';
+import PCAJSLFCase from './legalcase/pcajslfcase';
+import ZSCQAJSLFCase from './legalcase/zscqajslfcase';
 
 class Main extends Component {
     render() {
@@ -27,9 +35,15 @@ class Main extends Component {
                         <Picker
                             style={styles.titlePicker}
                             mode="dropdown"
-                            onValueChange={(lang) => this.setState({language: lang})}>
-                            <Picker.Item style={styles.titlePickerItem} label="java" value="java"/>
-                            <Picker.Item style={styles.titlePickerItem} label="js" value="js"/>
+                            onValueChange={(name) => this.setState({language: name})}>
+                            <Picker.Item style={styles.titlePickerItem} label={new CCAJSLFCase().name} value={new CCAJSLFCase().name}/>
+                            <Picker.Item style={styles.titlePickerItem} label={new CCBQSQFCase().name} value={new CCBQSQFCase().name}/>
+                            <Picker.Item style={styles.titlePickerItem} label={new QZZXSQFCase().name} value={new QZZXSQFCase().name}/>
+                            <Picker.Item style={styles.titlePickerItem} label={new LHAJSLFCase().name} value={new LHAJSLFCase().name}/>
+                            <Picker.Item style={styles.titlePickerItem} label={new ZFLSQFCase().name} value={new ZFLSQFCase().name}/>
+                            <Picker.Item style={styles.titlePickerItem} label={new RGQAJSLFCase().name} value={new RGQAJSLFCase().name}/>
+                            <Picker.Item style={styles.titlePickerItem} label={new PCAJSLFCase().name} value={new PCAJSLFCase().name}/>
+                            <Picker.Item style={styles.titlePickerItem} label={new ZSCQAJSLFCase().name} value={new ZSCQAJSLFCase().name}/>
                         </Picker>
                     </View>
                     <View style={styles.titleFunction}>
