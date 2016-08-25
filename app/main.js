@@ -113,7 +113,8 @@ const styles = StyleSheet.create({
             justifyContent: 'space-between'
         },
         title: {
-            height: 50,
+            height: (Platform.OS == 'ios')?70:50,
+            paddingTop:(Platform.OS == 'ios')?20:0,
             flexDirection: 'row',
             justifyContent: 'space-between',
             backgroundColor: '#3F51B5'
