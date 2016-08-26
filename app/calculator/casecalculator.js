@@ -10,6 +10,8 @@ function CaseCalculator() {
 
 CaseCalculator.prototype = new Calculator();
 
+CaseCalculator.prototype.mCurrentDisplay = "";
+
 CaseCalculator.prototype.input = function (input) {
 
     if (this.mCurrentDisplay.contains(".") &&

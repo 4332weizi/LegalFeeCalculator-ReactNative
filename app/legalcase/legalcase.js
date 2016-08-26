@@ -12,7 +12,7 @@ LegalCase.prototype.describe;
 LegalCase.prototype.targetAmount;
 /** 诉讼费 */
 LegalCase.prototype.legalFee;
-LegalCase.prototype.calculator = {};
+LegalCase.prototype.calculator;
 LegalCase.prototype.createCalculator = function(){};
 
 module.exports = LegalCase;

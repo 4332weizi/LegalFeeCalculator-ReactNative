@@ -26,6 +26,17 @@ import PCAJSLFCase from './legalcase/pcajslfcase';
 import ZSCQAJSLFCase from './legalcase/zscqajslfcase';
 
 class Main extends Component {
+
+    constructor(props) {
+        super(props);
+        this.mSupportCases = this.getSupportCases();
+        this.state = {
+            currentCaseIndex: 0,
+            input: "0",
+            result: "0",
+        }
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -35,15 +46,10 @@ class Main extends Component {
                         <Picker
                             style={styles.titlePicker}
                             mode="dropdown"
-                            onValueChange={(name) => this.setState({language: name})}>
-                            <Picker.Item style={styles.titlePickerItem} label={new CCAJSLFCase().name} value={new CCAJSLFCase().name}/>
-                            <Picker.Item style={styles.titlePickerItem} label={new CCBQSQFCase().name} value={new CCBQSQFCase().name}/>
-                            <Picker.Item style={styles.titlePickerItem} label={new QZZXSQFCase().name} value={new QZZXSQFCase().name}/>
-                            <Picker.Item style={styles.titlePickerItem} label={new LHAJSLFCase().name} value={new LHAJSLFCase().name}/>
-                            <Picker.Item style={styles.titlePickerItem} label={new ZFLSQFCase().name} value={new ZFLSQFCase().name}/>
-                            <Picker.Item style={styles.titlePickerItem} label={new RGQAJSLFCase().name} value={new RGQAJSLFCase().name}/>
-                            <Picker.Item style={styles.titlePickerItem} label={new PCAJSLFCase().name} value={new PCAJSLFCase().name}/>
-                            <Picker.Item style={styles.titlePickerItem} label={new ZSCQAJSLFCase().name} value={new ZSCQAJSLFCase().name}/>
+                            selectedValue={this.state.currentCaseIndex}
+                            onValueChange={(index)=>this.onPickerValueChange(index)}>
+                            {this.mSupportCases.map((source, i)=>(
+                                <Picker.Item key={source.name} label={source.name} value={i}></Picker.Item>))}
                         </Picker>
                     </View>
                     <View style={styles.titleFunction}>
@@ -52,28 +58,28 @@ class Main extends Component {
                 </View>
                 <View style={styles.content}>
                     <View style={styles.calculatorDisplayContainer}>
-                        <Text style={styles.calculatorResultDisplay}>121.50</Text>
+                        <Text style={styles.calculatorResultDisplay}>{this.state.result}</Text>
                     </View>
                     <View style={styles.calculatorDisplayContainer}>
-                        <Text style={styles.calculatorInputDisplay}>128600</Text>
+                        <Text style={styles.calculatorInputDisplay}>{this.state.result}</Text>
                     </View>
                     <View style={styles.calculatorInputPanel}>
                         <View style={styles.calculatorRow}>
-                            <Cell style={styles.calculatorCell}>7</Cell>
+                            <Cell style={styles.calculatorCell} onPress={()=>this.onCellPress(7)}>7</Cell>
                             <View style={styles.verticalDivider}></View>
-                            <Cell style={styles.calculatorCell}>8</Cell>
+                            <Cell style={styles.calculatorCell} onPress={()=>this.onCellPress(8)}>8</Cell>
                             <View style={styles.verticalDivider}></View>
-                            <Cell style={styles.calculatorCell}>9</Cell>
+                            <Cell style={styles.calculatorCell} onPress={()=>this.onCellPress(9)}>9</Cell>
                             <View style={styles.verticalDivider}></View>
                             <Cell style={styles.calculatorCell} source={require("./img/ic_del.png")}></Cell>
                         </View>
                         <View style={styles.horizontalDivider}></View>
                         <View style={styles.calculatorRow}>
-                            <Cell style={styles.calculatorCell}>4</Cell>
+                            <Cell style={styles.calculatorCell} onPress={()=>this.onCellPress(4)}>4</Cell>
                             <View style={styles.verticalDivider}></View>
-                            <Cell style={styles.calculatorCell}>5</Cell>
+                            <Cell style={styles.calculatorCell} onPress={()=>this.onCellPress(5)}>5</Cell>
                             <View style={styles.verticalDivider}></View>
-                            <Cell style={styles.calculatorCell}>6</Cell>
+                            <Cell style={styles.calculatorCell} onPress={()=>this.onCellPress(6)}>6</Cell>
                             <View style={styles.verticalDivider}></View>
                             <Cell style={styles.calculatorCell} textColor='#ff5d00'>C</Cell>
                         </View>
@@ -81,19 +87,19 @@ class Main extends Component {
                             <View style={[styles.calculatorInputPanel, {flex: 3}]}>
                                 <View style={styles.horizontalDivider}></View>
                                 <View style={styles.calculatorRow}>
-                                    <Cell style={styles.calculatorCell}>1</Cell>
+                                    <Cell style={styles.calculatorCell} onPress={()=>this.onCellPress(1)}>1</Cell>
                                     <View style={styles.verticalDivider}></View>
-                                    <Cell style={styles.calculatorCell}>2</Cell>
+                                    <Cell style={styles.calculatorCell} onPress={()=>this.onCellPress(2)}>2</Cell>
                                     <View style={styles.verticalDivider}></View>
-                                    <Cell style={styles.calculatorCell}>3</Cell>
+                                    <Cell style={styles.calculatorCell} onPress={()=>this.onCellPress(3)}>3</Cell>
                                 </View>
                                 <View style={styles.horizontalDivider}></View>
                                 <View style={styles.calculatorRow}>
                                     <Cell style={[styles.calculatorCell, {backgroundColor: '#e3e4e5'}]}></Cell>
                                     <View style={styles.verticalDivider}></View>
-                                    <Cell style={styles.calculatorCell}>0</Cell>
+                                    <Cell style={styles.calculatorCell} onPress={()=>this.onCellPress(0)}>0</Cell>
                                     <View style={styles.verticalDivider}></View>
-                                    <Cell style={styles.calculatorCell}>.</Cell>
+                                    <Cell style={styles.calculatorCell} onPress={()=>this.onCellPress('.')}>.</Cell>
                                 </View>
                             </View>
                             <Cell style={[styles.calculatorCell, {backgroundColor: '#FF4081'}]}
@@ -104,6 +110,36 @@ class Main extends Component {
             </View>
         );
     }
+
+    onPickerValueChange(index) {
+        this.getCurrentCalculator().clear();
+        this.state.currentCaseIndex = index;
+        this.state.input = this.getCurrentCalculator().getDisplay();
+        this.state.result = "0";
+    }
+
+    onCellPress(value) {
+        this.state.input = this.getCurrentCalculator().input(value);
+    }
+
+    getSupportCases() {
+        return [new CCAJSLFCase(),
+            new CCBQSQFCase(),
+            new QZZXSQFCase(),
+            new LHAJSLFCase(),
+            new ZFLSQFCase(),
+            new RGQAJSLFCase(),
+            new PCAJSLFCase(),
+            new ZSCQAJSLFCase()];
+    }
+
+    getCurrentCase(){
+        return this.mSupportCases[this.state.currentCaseIndex];
+    }
+
+    getCurrentCalculator(){
+        return this.getCurrentCase().calculator;
+    }
 }
 
 const styles = StyleSheet.create({
@@ -113,8 +149,8 @@ const styles = StyleSheet.create({
             justifyContent: 'space-between'
         },
         title: {
-            height: (Platform.OS == 'ios')?70:50,
-            paddingTop:(Platform.OS == 'ios')?20:0,
+            height: (Platform.OS == 'ios') ? 70 : 50,
+            paddingTop: (Platform.OS == 'ios') ? 20 : 0,
             flexDirection: 'row',
             justifyContent: 'space-between',
             backgroundColor: '#3F51B5'
@@ -130,7 +166,7 @@ const styles = StyleSheet.create({
             justifyContent: 'center'
         },
         titlePicker: {
-            width: 130,
+            width: 180,
             color: 'white'
         },
         titlePickerItem: {

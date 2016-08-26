@@ -4,21 +4,28 @@ import {
     StyleSheet,
     View,
     Text,
-    Image
+    Image,
+    TouchableHighlight
 }from 'react-native';
 
 var Cell = React.createClass({
     render: function () {
         var props = this.props;
         if (props.source == null) {
-            return (<View style={[styles.container, props.style]}>
-                <Text style={[styles.text, {color: props.textColor}]}>{childrenAsString(this.props.children)}</Text>
-            </View>);
+            return (
+                <TouchableHighlight style={[styles.container, props.style]} activeOpacity={props.activeOpacity}
+                                    underlayColor={(props.underlayColor == null) ? "#e3e4e5" : props.underlayColor}
+                                    onPress={props.onPress}>
+                    <Text
+                        style={[styles.text, {color: props.textColor}]}>{childrenAsString(this.props.children)}</Text>
+                </TouchableHighlight>);
         } else {
-            return (<View style={[styles.container, props.style]}>
+            return (<TouchableHighlight style={[styles.container, props.style]} activeOpacity={props.activeOpacity}
+                                        underlayColor={(props.underlayColor == null) ? "#e3e4e5" : props.underlayColor}
+                                        onPress={props.onPress}>
                 <Image style={styles.image} source={props.source}>
                 </Image>
-            </View>);
+            </TouchableHighlight>);
         }
     }
 });
@@ -41,14 +48,15 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: 'white'
     },
     text: {
         flex: 1,
         textAlign: 'center',
         fontSize: 30,
         color: '#595d66',
-        backgroundColor: '#fff0'
+        backgroundColor: 'transparent'
     },
     image: {}
 });
