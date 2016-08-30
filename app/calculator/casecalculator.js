@@ -4,7 +4,10 @@ import Calculator from './calculator';
 
 function CaseCalculator() {
     Calculator.call(this);
-    this.mCurrentDisplay = "0";
+    this.contains = function (str, substr) {
+        return str.indexOf(substr) >= 0;
+    };
+    this.mCurrentDisplay = 0;
     this.clear();
 }
 
@@ -14,32 +17,32 @@ CaseCalculator.prototype.mCurrentDisplay = "";
 
 CaseCalculator.prototype.input = function (input) {
 
-    if (this.mCurrentDisplay.contains(".") &&
-        this.mCurrentDisplay.split("\\.").length > 1 && this.mCurrentDisplay.split("\\.")[1].length() == 2) {
+    if (this.contains(this.mCurrentDisplay, '.') &&
+        this.mCurrentDisplay.split('.').length > 1 && this.mCurrentDisplay.split('.')[1].length == 2) {
         return this.getDisplay();
     }
 
     //输入0
     if (input == '0') {
-        if (this.mCurrentDisplay == "0") {
+        if (this.mCurrentDisplay == '0') {
             return this.getDisplay();
         }
     }
 
     //输入.
     if (input == '.') {
-        if (this.mCurrentDisplay.contains(".")) {
+        if (this.contains(this.mCurrentDisplay, '.')) {
             return this.getDisplay();
         }
-        if (this.mCurrentDisplay == "") {
-            this.mCurrentDisplay += "0";
+        if (this.mCurrentDisplay == '') {
+            this.mCurrentDisplay += '0';
             this.mCurrentDisplay += input;
             return this.getDisplay();
         }
     }
 
-    if (this.mCurrentDisplay=="0" && input != '.') {
-        this.mCurrentDisplay = "";
+    if (this.mCurrentDisplay == '0' && input != '.') {
+        this.mCurrentDisplay = '';
     }
     this.mCurrentDisplay += input;
 
@@ -47,7 +50,7 @@ CaseCalculator.prototype.input = function (input) {
 };
 
 CaseCalculator.prototype.backspace = function () {
-    if (this.mCurrentDisplay=="0") {
+    if (this.mCurrentDisplay == "0") {
         return this.getDisplay();
     }
     if (this.mCurrentDisplay.length > 1) {
@@ -59,7 +62,7 @@ CaseCalculator.prototype.backspace = function () {
 };
 
 CaseCalculator.prototype.clear = function () {
-    this.mCurrentDisplay = "0";
+    this.mCurrentDisplay = '0';
     return this.getDisplay();
 };
 
@@ -75,11 +78,20 @@ CaseCalculator.prototype.getCurrentInputValue = function () {
 };
 
 CaseCalculator.prototype.formatNumber = function (number) {
-    return number.toLocaleString();
+    number = number.toFixed(2);
+    number += '';
+    return this.formatDisplay(number);
 };
 
 CaseCalculator.prototype.formatDisplay = function (display) {
-    return display.toLocaleString(display);
+    var x = display.split('.');
+    var x1 = x[0];
+    var x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    return x1 + x2;
 };
 
 CaseCalculator.prototype.getResult = {};

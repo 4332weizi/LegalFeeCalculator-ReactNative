@@ -32,8 +32,8 @@ class Main extends Component {
         this.mSupportCases = this.getSupportCases();
         this.state = {
             currentCaseIndex: 0,
-            input: "0",
-            result: "0",
+            input: 0,
+            result: 0,
         }
     }
 
@@ -61,7 +61,7 @@ class Main extends Component {
                         <Text style={styles.calculatorResultDisplay}>{this.state.result}</Text>
                     </View>
                     <View style={styles.calculatorDisplayContainer}>
-                        <Text style={styles.calculatorInputDisplay}>{this.state.result}</Text>
+                        <Text style={styles.calculatorInputDisplay}>{this.state.input}</Text>
                     </View>
                     <View style={styles.calculatorInputPanel}>
                         <View style={styles.calculatorRow}>
@@ -71,7 +71,7 @@ class Main extends Component {
                             <View style={styles.verticalDivider}></View>
                             <Cell style={styles.calculatorCell} onPress={()=>this.onCellPress(9)}>9</Cell>
                             <View style={styles.verticalDivider}></View>
-                            <Cell style={styles.calculatorCell} source={require("./img/ic_del.png")}></Cell>
+                            <Cell style={styles.calculatorCell} source={require("./img/ic_del.png")} onPress={()=>this.onBackSpacePress()}></Cell>
                         </View>
                         <View style={styles.horizontalDivider}></View>
                         <View style={styles.calculatorRow}>
@@ -81,7 +81,7 @@ class Main extends Component {
                             <View style={styles.verticalDivider}></View>
                             <Cell style={styles.calculatorCell} onPress={()=>this.onCellPress(6)}>6</Cell>
                             <View style={styles.verticalDivider}></View>
-                            <Cell style={styles.calculatorCell} textColor='#ff5d00'>C</Cell>
+                            <Cell style={styles.calculatorCell} textColor='#ff5d00' onPress={()=>this.onClearPress()}>C</Cell>
                         </View>
                         <View style={[styles.calculatorRow, {flex: 2}]}>
                             <View style={[styles.calculatorInputPanel, {flex: 3}]}>
@@ -103,7 +103,7 @@ class Main extends Component {
                                 </View>
                             </View>
                             <Cell style={[styles.calculatorCell, {backgroundColor: '#FF4081'}]}
-                                  textColor='white'>=</Cell>
+                                  textColor='white' onPress={()=>this.onCalculatePress()}>=</Cell>
                         </View>
                     </View>
                 </View>
@@ -115,11 +115,28 @@ class Main extends Component {
         this.getCurrentCalculator().clear();
         this.state.currentCaseIndex = index;
         this.state.input = this.getCurrentCalculator().getDisplay();
-        this.state.result = "0";
+        this.state.result = 0;
+        this.setState(this.state);
     }
 
     onCellPress(value) {
         this.state.input = this.getCurrentCalculator().input(value);
+        this.setState(this.state);
+    }
+
+    onBackSpacePress(){
+        this.state.input = this.getCurrentCalculator().backspace();
+        this.setState(this.state);
+    }
+
+    onClearPress(){
+        this.state.input = this.getCurrentCalculator().clear();
+        this.setState(this.state);
+    }
+
+    onCalculatePress(){
+        this.state.result = this.getCurrentCalculator().getResult();
+        this.setState(this.state);
     }
 
     getSupportCases() {

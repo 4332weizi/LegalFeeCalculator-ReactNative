@@ -13,7 +13,7 @@ CCAJSLFCalculator.prototype = new CaseCaculator();
 
 CCAJSLFCalculator.prototype.getResult = function () {
     var result = 0;
-    var input = this.prototype.getCurrentInputValue();
+    var input = this.getCurrentInputValue();
     if ((input > 0) && (input <= 10000)) {
         result = 50;
     } else if ((input > 10000) && (input <= 100000)) {
@@ -35,7 +35,7 @@ CCAJSLFCalculator.prototype.getResult = function () {
     } else if (input > 20000000) {
         result = input * 0.005 + 41800;
     }
-    return this.prototype.formatNumber(result);
+    return this.formatNumber(result);
 };
 
 module.exports = CCAJSLFCalculator;
